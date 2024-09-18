@@ -1,17 +1,14 @@
 <?php
-function connectDB() {
-    $host = "localhost";
-    $dbname = "notes";
-    $username = "root";
-    $password = "";
 
-    try {
-        $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        return $conn;
-    } catch (PDOException $e) {
-        error_log("Connection failed: " . $e->getMessage());
-        return null;
-    }
+$conn = mysqli_connect(
+    getenv('DB_HOST'),       // Database host (e.g., localhost or the Coolify server)
+    getenv('DB_USERNAME'),   // Database username
+    getenv('DB_PASSWORD'),   // Database password
+    getenv('DB_DATABASE'),   // Database name
+    getenv('DB_PORT') ?: '3306' // Database port, default to 3306 if not set
+);
+
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
 }
 ?>
