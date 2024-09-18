@@ -1,7 +1,7 @@
 <?php
 include_once "dbconnection.php";
 
-$conn = connectToDatabase();
+$conn = connectDB();
 
 function test_input($data) {
     $data = trim($data);
