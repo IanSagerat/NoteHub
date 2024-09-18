@@ -1,22 +1,23 @@
-
 <?php
-function connectToDatabase() {
-    $servername = getenv('DB_HOST') ?: 'localhost';
-    $username = getenv('DB_USERNAME') ?: 'root';
-    $password = getenv('DB_PASSWORD') ?: '';
-    $database = getenv('DB_DATABASE') ?: 'notes';
+function connectDB() 
+{
+    $host = getenv('DB_HOST');
+    $dbname = getenv('DB_DATABASE');
+    $username = getenv('DB_USERNAME');
+    $password = getenv('DB_PASSWORD');
     $port = getenv('DB_PORT') ?: '3306';
 
-    try {
-        $conn = new PDO("mysql:host=$servername;dbname=$database;port=$port", $username, $password);
+    try 
+    {
+        $dsn = "mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4";
+        $conn = new PDO($dsn, $username, $password);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $conn;
-    } catch (PDOException $e) {
+    } 
+    catch (PDOException $e) 
+    {
         die("Connection Failed: " . $e->getMessage());
     }
 }
 
-$conn = connectToDatabase();
 ?>
-
-
