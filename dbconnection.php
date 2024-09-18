@@ -1,14 +1,22 @@
+
 <?php
+function connectToDatabase() {
+    $servername = getenv('DB_HOST') ?: 'localhost';
+    $username = getenv('DB_USERNAME') ?: 'root';
+    $password = getenv('DB_PASSWORD') ?: '';
+    $database = getenv('DB_DATABASE') ?: 'notes';
+    $port = getenv('DB_PORT') ?: '3306';
 
-$conn = mysqli_connect(
-    getenv('DB_HOST'),       // Database host (e.g., localhost or the Coolify server)
-    getenv('DB_USERNAME'),   // Database username
-    getenv('DB_PASSWORD'),   // Database password
-    getenv('DB_DATABASE'),   // Database name
-    getenv('DB_PORT') ?: '3306' // Database port, default to 3306 if not set
-);
-
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
+    try {
+        $conn = new PDO("mysql:host=$servername;dbname=$database;port=$port", $username, $password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        return $conn;
+    } catch (PDOException $e) {
+        die("Connection Failed: " . $e->getMessage());
+    }
 }
+
+$conn = connectToDatabase();
 ?>
+
+
