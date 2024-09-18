@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $description = $_POST['description'];
 
         try {
-            $pdo = connectToDatabase();
+            $pdo = connectDB();
             if (!$pdo) {
                 throw new Exception("Failed to connect to the database.");
             }
